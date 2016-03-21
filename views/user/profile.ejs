@@ -54,7 +54,7 @@
                 <div class='tumbnail'>
                     <img src='<%= trade.usersBook.imageUrl %>'>
                     <img src='<%= trade.bookReceived.imageUrl %>'>
-                    <a href='/api/trade/?book1=<%= trade.usersBook._id %>&book2=<%= trade.bookReceived._id %>' class='btn btn-success'>Make Trade</a>
+                    <a href='/api/trade/?bookGiven=<%= trade.usersBook._id %>&bookReceived=<%= trade.bookReceived._id %>' class='btn btn-success'>Make Trade</a>
                 </div>
             </div>
         <% })} %>

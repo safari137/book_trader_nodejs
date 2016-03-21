@@ -20,13 +20,13 @@ function routes(app, passport) {
         .post(bookController.addBook);
     
     app.route("/profile")
-        .get(userController.showProfile);
+        .get(isLoggedIn, userController.showProfile);
         
     app.route("/user/:userId/books")
         .get(userController.showBooks);
         
     app.route("/newbook")
-        .get(function(req, res) {
+        .get(isLoggedIn, function(req, res) {
            res.render('newbook', { isAuthenticated: req.isAuthenticated }); 
         });
     
@@ -39,10 +39,10 @@ function routes(app, passport) {
         .post(userController.signup);
         
     app.route("/api/request/:bookId") 
-        .get(bookController.request);
+        .get(isLoggedIn, bookController.request);
         
     app.route("/api/trade/")
-        .get(bookController.makeTrade);
+        .get(isLoggedIn, bookController.makeTrade);
 }
 
 module.exports = routes;

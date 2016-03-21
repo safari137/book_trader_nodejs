@@ -27,7 +27,19 @@ var bookController = function() {
             bookId = bookId.substring(1);
         }
         
-        createRequest(bookId, req.user);
+        if (!hasBeenRequested(req.user, bookId))
+            createRequest(bookId, req.user);
+        res.end();
+    }
+    
+    var hasBeenRequested = function(user, bookId) {
+        var requests = user.requestsSent.filter(function(value) {
+            return (value.book.toString() === bookId.toString());
+        });
+        
+        var alreadyRequested = (requests.length > 0);
+        
+        return alreadyRequested;
     }
     
     var createRequest = function(bookId, fromUser) {
@@ -50,24 +62,36 @@ var bookController = function() {
     } 
     
     this.makeTrade = function(req, res) {
-        var book1 = req.query.book1,
-            book2 = req.query.book2;
+        var bookReceived = req.query.bookReceived,
+            bookGiven = req.query.bookGiven;
+        
+        if (!tradeIsAllowed(req.user, bookGiven, bookReceived)) {
+            res.redirect('/profile');
+            return;
+        }
             
-        Book.findById(book1, function(err, foundBook1) {
+        Book.findById(bookReceived, function(err, foundBook1) {
            if (err) throw err;
            
-           Book.findById(book2, function(err, foundBook2) {
+           Book.findById(bookGiven, function(err, foundBook2) {
                if (err) throw err;
                
-              removeRequests(foundBook1.ownerId, book2, book1);
-              removeRequests(foundBook2.ownerId, book1, book2);
+              removeRequests(foundBook1.ownerId, bookGiven, bookReceived);
+              
+              var temp = bookReceived;
+              bookReceived = bookGiven;
+              bookGiven = temp;
+              
+              removeRequests(foundBook2.ownerId, bookGiven, bookReceived);
+              
               foundBook1.borrowerId = foundBook2.ownerId;
               foundBook2.borrowerId = foundBook1.ownerId;
+              
               foundBook1.save();
               foundBook2.save();
            });
         });
-        res.end();
+        res.redirect('/profile');
     }
     var removeRequests = function(userId, sentBookId, receivedBookId) {
           User.findByIdAndUpdate(userId, { '$pull': {  requestsSent: { book: sentBookId }}}, function(err, data) {
@@ -81,6 +105,32 @@ var bookController = function() {
                   
                   data.save();
           });
+    }
+    
+    var tradeIsAllowed = function(user, bookToGive, bookToGet) {
+        var receivedPass = false,
+            sentPass     = false;
+            
+        if (!user)
+            return false;
+            
+        for(var i = 0; i<user.requestsReceived.length; i++) {
+            if (user.requestsReceived[i].book.toString() === bookToGive.toString()) {
+                receivedPass = true;
+                break;
+            }
+        }
+        
+        if (!receivedPass) return false;
+        
+        for (i = 0; i<user.requestsSent.length; i++) {
+            if (user.requestsSent[i].book.toString() === bookToGet.toString()) {
+                sentPass = true;
+                break;
+            }
+        }
+        
+        return sentPass;
     }
 }
 

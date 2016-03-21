@@ -50,7 +50,7 @@ var userController = function(passport) {
                 
                if (err) throw err;
                
-               var trades = getReadyTrades(user);
+               var trades = getTradesThatAreReady(user);
                
                res.render('user/profile', {isAuthenticated : req.isAuthenticated(), books :books, requestedBooks : user.requestsSent, requestsReceived : user.requestsReceived, trades : trades });
            });
@@ -67,7 +67,7 @@ var userController = function(passport) {
             });
     }
     
-    var getReadyTrades = function(user) {
+    var getTradesThatAreReady = function(user) {
         var trades = [];
         
         for (var i = 0; i<user.requestsSent.length; i++) {
