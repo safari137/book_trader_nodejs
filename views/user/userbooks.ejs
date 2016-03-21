@@ -1,0 +1,25 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <h2>Users Books</h2>
+    <div class="row">
+    <% if (books) { books.forEach(function(book) { %>
+    
+        <div class='book col-md-2 col-sm-4'>
+            <div class="thumbnail">
+                <img src=' <%= book.imageUrl %>'>
+                <hr>
+                <% if (isAuthenticated) { %>
+                    <a href="/api/request/ <%= book._id %>" class='btn btn-block btn-success'>Request</a>
+                <% }  %>
+                <div class='caption text-center'>
+                    <%= book.title %> 
+                </div>
+            </div>
+        </div>
+        
+    <% })} %>
+    </div>
+</div>
+
+<% include ../partials/footer %>

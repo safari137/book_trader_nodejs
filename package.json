@@ -1,0 +1,30 @@
+{
+  "name": "book_trader",
+  "version": "0.0.1",
+  "description": "Application for trading books",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/safari137/book_trader_nodejs.git"
+  },
+  "author": "David Dill",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/safari137/book_trader_nodej/issues"
+  },
+  "homepage": "https://github.com/safari137/book_trader_nodejs#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "connect-flash": "^0.1.1",
+    "dotenv": "^2.0.0",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "mongoose": "^4.4.7",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0"
+  }
+}

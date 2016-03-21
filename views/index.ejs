@@ -1,0 +1,49 @@
+<% include partials/header %>
+
+<div class="container">
+    <h1 class="text-center">Book Trader</h1>
+    <% if (!isAuthenticated) { %>
+    
+        <div class=" row text-center">
+            <div class="col-md-4 col-sm-0"></div>
+            <div class="col-md-2 col-sm-6">
+                <a class="btn btn-primary btn-block" href="/login">Login </a>
+            </div>
+            <div class="col-md-2 col-sm-6">
+                <a class="btn btn-success btn-block" href="/signup"> Signup</a>    
+            </div>
+            <div class="col-md-4 col-sm-0"></div>
+            
+        </div>
+    <% } %>
+        
+        <div class='books'>
+            <h2>Books</h2>
+            <a href="/newbook">Add Book</a>
+            
+            <div class='row'>
+            
+            <% if (books) { books.forEach(function(book) { %>
+            
+                <div class='book col-md-2 col-sm-4'>
+                    <div class="thumbnail">
+                        <img src=' <%= book.imageUrl %>'>
+                        <hr>
+                        <% if (isAuthenticated && userId.toString() !== book.ownerId.toString() && book.borrowerId === undefined) { %>
+                            <a href="/api/request/ <%= book._id %>" class='btn btn-block btn-success'>Request</a>
+                        <% }  %>
+                        <div class='caption text-center'>
+                             <%= book.title %> 
+                         </div>
+                    </div>
+                </div>
+            
+            <% })} %>
+            </div>    
+        </div>
+</div>
+<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="./js/site.js"></script>
+
+<% include partials/footer %>
