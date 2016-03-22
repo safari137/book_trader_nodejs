@@ -47,7 +47,7 @@ function seedDB() {
     var book3 = 
             {
                 title : 'Head First Java',
-                imageUrl : 'http://imgur.com/iBBX4.jpg'
+                imageUrl : 'http://ecx.images-amazon.com/images/I/51Gsycdh-TL._AA160_.jpg'
             }
     
     var removed = 0;        

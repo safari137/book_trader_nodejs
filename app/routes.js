@@ -17,7 +17,8 @@ function routes(app, passport) {
     
     app.route("/") 
         .get(bookController.getBooks)
-        .post(bookController.addBook);
+        .post(bookController.addBook)
+        .delete(bookController.removeBook);
     
     app.route("/profile")
         .get(isLoggedIn, userController.showProfile);
@@ -38,11 +39,17 @@ function routes(app, passport) {
         .get(userController.startSignup)
         .post(userController.signup);
         
+    app.route("/logout")
+        .get(userController.logout);
+        
     app.route("/api/request/:bookId") 
         .get(isLoggedIn, bookController.request);
         
     app.route("/api/trade/")
         .get(isLoggedIn, bookController.makeTrade);
+        
+    app.route("/api/trade/:bookId/return")
+        .post(isLoggedIn, bookController.returnTradedBook);
 }
 
 module.exports = routes;

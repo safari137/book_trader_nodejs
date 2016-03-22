@@ -46,13 +46,15 @@ var userController = function(passport) {
                     model: 'Book'
                 }
             })
+            .populate('borrowedBooks')
             .exec(function(err, user) {
                 
                if (err) throw err;
                
                var trades = getTradesThatAreReady(user);
                
-               res.render('user/profile', {isAuthenticated : req.isAuthenticated(), books :books, requestedBooks : user.requestsSent, requestsReceived : user.requestsReceived, trades : trades });
+               res.render('user/profile', {isAuthenticated : req.isAuthenticated(), books :books, requestedBooks : user.requestsSent, requestsReceived : user.requestsReceived, 
+                    trades : trades, borrowedBooks: user.borrowedBooks });
            });
         });
     }
@@ -74,9 +76,9 @@ var userController = function(passport) {
             for (var k = 0; k<user.requestsReceived.length; k++) {
                 if (user.requestsSent[i].ownerId.toString() === user.requestsReceived[k].requesterId.toString()) {
                     var trade = {
-                        usersBook : user.requestsSent[i].book,
-                        bookReceived : user.requestsReceived[k].book
-                    };
+                        bookReceived : user.requestsSent[i].book,
+                        usersBook : user.requestsReceived[k].book
+                    }; 
                     trades.push(trade);
                 }
             }

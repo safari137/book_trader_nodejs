@@ -13,3 +13,40 @@
     font-size: 13px;
     margin-top: 20px;
 }
+
+.delete {
+    background : #b00;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.delete:hover {
+    background: #d00;
+    color: #ccc;
+}
+
+.open-close {
+    font-size : 30px;
+    font-weight: normal;
+    padding-right: 30px;
+    cursor : pointer;
+    float: right;
+}
+
+.open-close:hover {
+    font-weight: bold;
+}
+
+.collapsed {
+    display: none;
+}
+
+.top {
+    margin-top : 10px;
+}
+
+.bordered {
+    border : solid black 1px;
+    border-radius: 10px;
+    padding-left: 20px;
+}

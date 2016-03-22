@@ -14,10 +14,38 @@ var bookController = function() {
     }
     
     this.addBook = function(req, res) {
+        req.body.book.imageUrl = '';
+        req.body.book.ownerId = req.user._id;
+        
         Book.create(req.body.book, function(err, newBook) {
             if (err) throw err;
-            
+            req.user.ownedBooks.push(newBook);
+            req.user.save();
             res.redirect("/");
+        });
+    }
+    
+    var removeBookRequests = function(bookId) {
+        User.find({}, function(err, users) {
+            if (err) throw err;
+            
+            users.forEach(function(user) {
+                user.requestsReceived = user.requestsReceived.filter(function(value) {
+                    return (value.book.toString() !== bookId.toString()) 
+                });
+                user.requestsSent = user.requestsSent.filter(function(value) {
+                    return (value.book.toString() !== bookId.toString()) 
+                });
+                user.save();
+            }); 
+        });
+    }
+    
+    this.removeBook= function(req, res) {
+        Book.remove({_id : req.body._id}, function(err) {
+            if (err) throw err;
+            removeBookRequests(req.body._id);
+            res.end();
         });
     }
     
@@ -76,6 +104,8 @@ var bookController = function() {
            Book.findById(bookGiven, function(err, foundBook2) {
                if (err) throw err;
                
+              updateBorrowedBooks(req.user, foundBook1, foundBook1.ownerId, foundBook2);
+               
               removeRequests(foundBook1.ownerId, bookGiven, bookReceived);
               
               var temp = bookReceived;
@@ -93,6 +123,20 @@ var bookController = function() {
         });
         res.redirect('/profile');
     }
+    
+    
+    var updateBorrowedBooks = function(user1Obj, book1Obj, user2Id, book2Obj) {
+        user1Obj.borrowedBooks.push(book1Obj);
+        user1Obj.save();
+        
+        User.findById(user2Id, function(err, user) {
+                  if (err) throw err;
+                  
+                  user.borrowedBooks.push(book2Obj);
+                  user.save();
+        });
+    }
+    
     var removeRequests = function(userId, sentBookId, receivedBookId) {
           User.findByIdAndUpdate(userId, { '$pull': {  requestsSent: { book: sentBookId }}}, function(err, data) {
                   if (err) throw err;
@@ -131,6 +175,31 @@ var bookController = function() {
         }
         
         return sentPass;
+    }
+    
+    this.returnTradedBook = function(req, res) {
+        var bookId = req.params.bookId;
+        
+        removeBorrowedBookFromUser(req.user, bookId);
+        
+        removeBorrowerIdFromBook(bookId);
+    }
+    
+    var removeBorrowerIdFromBook = function(bookId) {
+        Book.findById(bookId, function(err, book) {
+           if (err) throw err;
+           
+           book.borrowerId = undefined;
+           book.save();
+        });
+    }
+    
+    var removeBorrowedBookFromUser = function(user, bookId) {
+        user.borrowedBooks = user.borrowedBooks.filter(function(value) {
+            return (value.toString() !== bookId.toString());
+        });
+        
+        user.save();
     }
 }
 

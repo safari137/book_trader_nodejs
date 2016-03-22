@@ -1,65 +1,90 @@
 <% include ../partials/header.ejs %>
 
 <div class="container">
-    <h2>My Books</h2>
-    <div class='row'>
-    <% if (books) { books.forEach(function(book) { %>
-        <div class='book col-md-2 col-sm-4'>
-            <div class="thumbnail">
-                <img src='<%= book.imageUrl %>'>
-                <hr>
-                <div class='caption text-center'>
-                     <%= book.title %> 
-                 </div>
+    <div class="bordered top">
+        <h2>My Books <span class="open-close">+</span></h2>
+        <div class='row collapsible collapsed'>
+        <% if (books) { books.forEach(function(book) { %>
+            <div class='book col-md-2 col-sm-4'>
+                <div class="thumbnail">
+                    <img src='<%= book.imageUrl %>'>
+                    <div class='caption text-center'>
+                         <div class='delete text-center' id='<%= book._id %>'><i class="fa fa-trash-o"></i></div>
+                     </div>
+                </div>
             </div>
+        <% }) } %>
         </div>
-    <% }) } %>
     </div>
     
-    <h2>My Requests</h2>
-    <div class="row">
-        <% if (requestedBooks) { requestedBooks.forEach(function(request) { %>
-            <div class='book col-md-2 col-sm-4'>
-                <div class="thumbnail">
-                    <img src='<%= request.book.imageUrl %>'>
-                    <hr>
-                    <div class='caption text-center'>
-                         <%= request.book.title %> 
-                     </div>
+    <div class="bordered top">
+        <h2>My Requests <span class="open-close">+</span></h2> 
+        
+        <div class="row collapsible collapsed">
+            <% if (requestedBooks) { requestedBooks.forEach(function(request) { %>
+                <div class='book col-md-2 col-sm-4'>
+                    <div class="thumbnail">
+                        <img src='<%= request.book.imageUrl %>'>
+                        <hr>
+                        <div class='caption text-center'>
+                             <%= request.book.title %> 
+                         </div>
+                    </div>
                 </div>
-            </div>
-        <% })} %>
+            <% })} %>
+        </div>
     </div>
     
-    <h2>Requests Received</h2>
-        <div class="row">
-        <% if (requestsReceived) { requestsReceived.forEach(function(request) { %>
-            <div class='book col-md-2 col-sm-4'>
-                <div class="thumbnail">
-                    <img src='<%= request.book.imageUrl %>'>
-                    <hr>
-                    <a href="/user/<%=request.requesterId%>/books" class="btn btn-success btn-block">View Books</a>
-                    <div class='caption text-center'>
-                         <%= request.book.title %> 
-                     </div>
+    <div class="bordered top">
+        <h2>Requests Received <span class="open-close">+</span></h2>
+            <div class="row collapsible collapsed">
+            <% if (requestsReceived) { requestsReceived.forEach(function(request) { %>
+                <div class='book col-md-2 col-sm-4'>
+                    <div class="thumbnail">
+                        <img src='<%= request.book.imageUrl %>'>
+                        <hr>
+                        <a href="/user/<%=request.requesterId%>/books" class="btn btn-success btn-block">View Books</a>
+                    </div>
                 </div>
-            </div>
-        <% })} %>
+            <% })} %>
+        </div>
     </div>
     
-    <h2>Trades Ready</h2>
-    <div class="row">
-        <% if (trades) { trades.forEach(function(trade) { %>
-            <div class='trade col-md-6'>
-                <div class='tumbnail'>
-                    <img src='<%= trade.usersBook.imageUrl %>'>
-                    <img src='<%= trade.bookReceived.imageUrl %>'>
-                    <a href='/api/trade/?bookGiven=<%= trade.usersBook._id %>&bookReceived=<%= trade.bookReceived._id %>' class='btn btn-success'>Make Trade</a>
+    <div class="bordered top">
+        <h2>Borrowed Books <span class="open-close">+</span></h2>
+        <div class="row collapsible collapsed">
+            <% if (borrowedBooks) { borrowedBooks.forEach(function(book) { %>
+                <div class='book col-md-2 col-sm-4'>
+                    <div class="thumbnail">
+                        <img src='<%= book.imageUrl %>'>
+                        <hr>
+                        <button class="btn btn-block btn-success returnBook" id="<%= book._id %>">Return Book</button>
+                    </div>
                 </div>
-            </div>
-        <% })} %>
+            
+            <% })} %>
+        </div>
+    </div>
+    
+    <div class="bordered top">
+        <h2>Trades Ready <span class="open-close">+</span></h2>
+        <div class="row collapsible collapsed">
+            <% if (trades) { trades.forEach(function(trade) { %>
+                <div class='trade col-md-6'>
+                    <div class='tumbnail'>
+                        <img src='<%= trade.usersBook.imageUrl %>' alt='<%= trade.usersBook.title %>'> <->
+                        <img src='<%= trade.bookReceived.imageUrl %>' alt='<%= trade.bookReceived.title %>'>
+                        <a href='/api/trade/?bookGiven=<%= trade.usersBook._id %>&bookReceived=<%= trade.bookReceived._id %>' class='btn btn-success btn-block'>Make Trade</a>
+                    </div>
+                </div>
+            <% })} %>
+        </div>
     </div>
     
 </div>
+
+<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="./js/mybooks.js"></script>
 
 <% include ../partials/footer.ejs %>
