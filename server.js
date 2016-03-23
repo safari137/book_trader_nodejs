@@ -5,11 +5,7 @@ var express     = require('express'),
     passport    = require('passport'),
     session     = require('express-session'),
     flash       = require('connect-flash'),
-    mongoose    = require('mongoose'),
-    seedDB      = require('./seed');
-    
-    
-seedDB();
+    mongoose    = require('mongoose');
     
 require('dotenv').config();
 require('./config/passport')(passport);
