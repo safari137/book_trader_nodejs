@@ -3,6 +3,8 @@ var mongoose = require('mongoose');
 var userSchema = mongoose.Schema({
     email: String,
     password: String,
+    city : String,
+    state : String,
     ownedBooks : [
         {
             type: mongoose.Schema.Types.ObjectId,

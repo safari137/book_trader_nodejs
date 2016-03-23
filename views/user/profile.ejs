@@ -1,6 +1,7 @@
 <% include ../partials/header.ejs %>
 
 <div class="container">
+    <a href="/newbook">Add Book</a>
     <div class="bordered top">
         <h2>My Books <span class="open-close">+</span></h2>
         <div class='row collapsible collapsed'>
@@ -25,10 +26,7 @@
                 <div class='book col-md-2 col-sm-4'>
                     <div class="thumbnail">
                         <img src='<%= request.book.imageUrl %>'>
-                        <hr>
-                        <div class='caption text-center'>
-                             <%= request.book.title %> 
-                         </div>
+                        <button class="btn btn-danger btn-block cancelRequest" id='<%= request.book._id %>'>Cancel</button>
                     </div>
                 </div>
             <% })} %>
@@ -42,7 +40,7 @@
                 <div class='book col-md-2 col-sm-4'>
                     <div class="thumbnail">
                         <img src='<%= request.book.imageUrl %>'>
-                        <hr>
+                        <button class="btn btn-danger btn-block cancelRequest" id='<%= request.book._id %>'>Cancel</button>
                         <a href="/user/<%=request.requesterId%>/books" class="btn btn-success btn-block">View Books</a>
                     </div>
                 </div>
@@ -70,10 +68,14 @@
         <h2>Trades Ready <span class="open-close">+</span></h2>
         <div class="row collapsible collapsed">
             <% if (trades) { trades.forEach(function(trade) { %>
-                <div class='trade col-md-6'>
-                    <div class='tumbnail'>
-                        <img src='<%= trade.usersBook.imageUrl %>' alt='<%= trade.usersBook.title %>'> <->
-                        <img src='<%= trade.bookReceived.imageUrl %>' alt='<%= trade.bookReceived.title %>'>
+                <div class='col-sm-6 text-center trade-group'>
+                    <div class="col-sm-6">
+                        <img class='min' src='<%= trade.usersBook.imageUrl %>' alt='<%= trade.usersBook.title %>'>
+                    </div>
+                    <div class='col-sm-6'>
+                        <img class='min' src='<%= trade.bookReceived.imageUrl %>' alt='<%= trade.bookReceived.title %>'>
+                    </div>
+                    <div class='col-sm-12 trade text-center'>
                         <a href='/api/trade/?bookGiven=<%= trade.usersBook._id %>&bookReceived=<%= trade.bookReceived._id %>' class='btn btn-success btn-block'>Make Trade</a>
                     </div>
                 </div>

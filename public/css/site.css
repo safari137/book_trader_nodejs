@@ -46,7 +46,45 @@
 }
 
 .bordered {
-    border : solid black 1px;
+    border : solid steelblue 2px;
     border-radius: 10px;
     padding-left: 20px;
+    background: #eee;
+}
+
+.book a,button {
+    margin-top: 5px;
+}
+
+.dropdown-menu > li > a {
+    margin: 1px auto;
+    color: #fff;
+}
+
+.dropdown-menu {
+    padding: 0;
+}
+
+.message {
+    margin-top : 15px;
+}
+
+.trade {
+    margin-top: 3px;
+}
+
+.row {
+    position: relative;
+}
+
+.min {
+    height: 125px;
+}
+
+img {
+    vertical-align: bottom;
+}
+
+.trade-group {
+    margin-bottom: 20px;
 }

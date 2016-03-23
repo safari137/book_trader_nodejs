@@ -7,14 +7,10 @@
     
         <div class='book col-md-2 col-sm-4'>
             <div class="thumbnail">
-                <img src=' <%= book.imageUrl %>'>
-                <hr>
+                <img src=' <%= book.imageUrl %>' alt='<%= book.title %>'>
                 <% if (isAuthenticated) { %>
                     <a href="/api/request/ <%= book._id %>" class='btn btn-block btn-success'>Request</a>
                 <% }  %>
-                <div class='caption text-center'>
-                    <%= book.title %> 
-                </div>
             </div>
         </div>
         

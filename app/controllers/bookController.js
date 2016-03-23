@@ -1,6 +1,7 @@
 var Book        = require('../models/book'),
     User        = require('../models/user'),
-    mongoose    = require('mongoose');
+    mongoose    = require('mongoose'),
+    books       = require('google-books-search');
 
 var bookController = function() {
     this.getBooks = function(req, res) {
@@ -14,15 +15,38 @@ var bookController = function() {
     }
     
     this.addBook = function(req, res) {
-        req.body.book.imageUrl = '';
         req.body.book.ownerId = req.user._id;
         
-        Book.create(req.body.book, function(err, newBook) {
-            if (err) throw err;
-            req.user.ownedBooks.push(newBook);
-            req.user.save();
-            res.redirect("/");
+        getBookInfo(req.body.book.title, function(err, results) {
+           if (err) throw err;
+           
+           req.body.book.imageUrl = results[0].thumbnail;
+           Book.create(req.body.book, function(err, newBook) {
+                if (err) throw err;
+                
+                req.user.ownedBooks.push(newBook);
+                req.user.save();
+                res.redirect("/profile");
+            });
         });
+    }
+    
+    var getBookInfo = function(title, callback) {
+        books.search(title, function(error, results) {
+            if (error) {
+                console.log(error);
+                callback(error, null);
+            }
+            callback(null, results)        
+        });
+    }
+    
+    this.cancelRequest = function(req, res) {
+        var bookId = req.params.bookId;
+        
+        removeBookRequests(bookId);
+        
+        res.end();
     }
     
     var removeBookRequests = function(bookId) {
@@ -57,7 +81,7 @@ var bookController = function() {
         
         if (!hasBeenRequested(req.user, bookId))
             createRequest(bookId, req.user);
-        res.end();
+        res.redirect('/profile');
     }
     
     var hasBeenRequested = function(user, bookId) {

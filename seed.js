@@ -34,8 +34,8 @@ function seedDB() {
         
     var book1 = 
             {
-                title : 'Clean Coder',
-                imageUrl : 'http://ecx.images-amazon.com/images/I/51oXyW8WQwL._SX258_BO1,204,203,200_.jpg'  
+                title : 'Clean Code',
+                imageUrl : 'http://books.google.com/books/content?id=dwSfGQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api'  
             };
             
     var book2 = 
@@ -47,7 +47,7 @@ function seedDB() {
     var book3 = 
             {
                 title : 'Head First Java',
-                imageUrl : 'http://ecx.images-amazon.com/images/I/51Gsycdh-TL._AA160_.jpg'
+                imageUrl : 'http://books.google.com/books/content?id=uIVJiAPlBq0C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
             }
     
     var removed = 0;        

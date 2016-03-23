@@ -16,6 +16,12 @@ $(".open-close").on('click', function() {
         $(this).text('+');
 });
 
+$(".cancelRequest").on('click', function() {
+   var id = $(this).attr('id');
+   
+   cancelRequest(id, this);
+});
+
 
 function returnBook(id) {
     $.ajax({
@@ -50,5 +56,21 @@ function deleteBook(id) {
     })
     .done(function() {
         alert('deleted');
+    });
+}
+
+function cancelRequest(id, element) {
+    $.ajax({
+        url : "/api/request/" + id,
+        type : "DELETE",
+        success : function() {
+            console.log('success');
+        }
+    })
+    .error(function(err) {
+        console.log(err);
+    })
+    .done(function() {
+        $(element).parents('.book').html('');
     });
 }

@@ -27,6 +27,30 @@ var userController = function(passport) {
         res.redirect("/");
     }
     
+    this.settings = function(req, res) {
+        var user = { city : req.user.city, state : req.user.state };
+        
+        res.render("user/updateProfile", {isAuthenticated : req.isAuthenticated(), user : user, message: req.flash('message') });
+    }
+    
+    this.updateSettings = function(req, res) {
+        if (req.body.user.hasOwnProperty('oldPassword')) {
+            if (req.body.user.oldPassword === req.user.password && req.body.user.newPassword.length >= 3) {
+                req.user.password = req.body.user.newPassword;
+                req.user.save();
+            } else {
+                req.flash('message', "Either you're old password is incorrect or your new password is less than 3 characters.")
+                res.redirect('/user/settings');
+                return;
+            }
+        } else {
+            req.user.city = req.body.user.city;
+            req.user.state = req.body.user.state;
+            req.user.save();
+        }
+        res.redirect('/profile');
+    }
+    
     this.showProfile = function(req, res) {
         Book.find({ownerId : req.user._id}, function(err, books) {
            if (err) throw err;

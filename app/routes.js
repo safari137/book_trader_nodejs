@@ -42,8 +42,13 @@ function routes(app, passport) {
     app.route("/logout")
         .get(userController.logout);
         
+    app.route("/user/settings")
+        .get(isLoggedIn, userController.settings)
+        .post(isLoggedIn, userController.updateSettings);
+        
     app.route("/api/request/:bookId") 
-        .get(isLoggedIn, bookController.request);
+        .get(isLoggedIn, bookController.request)
+        .delete(isLoggedIn, bookController.cancelRequest);
         
     app.route("/api/trade/")
         .get(isLoggedIn, bookController.makeTrade);

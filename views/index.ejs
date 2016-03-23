@@ -19,22 +19,16 @@
         
         <div class='books'>
             <h2>Books</h2>
-            <a href="/newbook">Add Book</a>
-            
             <div class='row'>
             
             <% if (books) { books.forEach(function(book) { %>
             
                 <div class='book col-md-2 col-sm-4'>
                     <div class="thumbnail">
-                        <img src=' <%= book.imageUrl %>'>
-                        <hr>
+                        <img src=' <%= book.imageUrl %>' alt='<%= book.title %>'>
                         <% if (isAuthenticated && userId.toString() !== book.ownerId.toString() && book.borrowerId === undefined) { %>
                             <a href="/api/request/ <%= book._id %>" class='btn btn-block btn-success'>Request</a>
                         <% }  %>
-                        <div class='caption text-center'>
-                             <%= book.title %> 
-                         </div>
                     </div>
                 </div>
             

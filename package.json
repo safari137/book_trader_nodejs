@@ -23,6 +23,7 @@
     "ejs": "^2.4.1",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
+    "google-books-search": "^0.2.0",
     "mongoose": "^4.4.7",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0"
