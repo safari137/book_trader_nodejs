@@ -208,6 +208,8 @@ var bookController = function() {
         removeBorrowedBookFromUser(req.user, bookId);
         
         removeBorrowerIdFromBook(bookId);
+        
+        res.send({ "message": "returned!"})
     }
     
     var removeBorrowerIdFromBook = function(bookId) {

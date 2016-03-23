@@ -6,7 +6,7 @@ var express     = require('express'),
     session     = require('express-session'),
     flash       = require('connect-flash'),
     mongoose    = require('mongoose');
-    
+
 require('dotenv').config();
 require('./config/passport')(passport);
                   

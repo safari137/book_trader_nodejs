@@ -3,8 +3,8 @@
 <div class="container">
     <a href="/newbook">Add Book</a>
     <div class="bordered top">
-        <h2>My Books <span class="open-close">+</span></h2>
-        <div class='row collapsible collapsed'>
+        <h2>My Books <span class="open-close">-</span></h2>
+        <div class='row collapsible'>
         <% if (books) { books.forEach(function(book) { %>
             <div class='book col-md-2 col-sm-4'>
                 <div class="thumbnail">
@@ -19,9 +19,9 @@
     </div>
     
     <div class="bordered top">
-        <h2>Requests Sent <span class="open-close">+</span></h2> 
+        <h2>Requests Sent <span class="open-close">-</span></h2> 
         
-        <div class="row collapsible collapsed">
+        <div class="row collapsible">
             <% if (requestedBooks) { requestedBooks.forEach(function(request) { %>
                 <div class='book col-md-2 col-sm-4'>
                     <div class="thumbnail">
@@ -34,8 +34,8 @@
     </div>
     
     <div class="bordered top">
-        <h2>Requests Received <span class="open-close">+</span></h2>
-            <div class="row collapsible collapsed">
+        <h2>Requests Received <span class="open-close">-</span></h2>
+            <div class="row collapsible">
             <% if (requestsReceived) { requestsReceived.forEach(function(request) { %>
                 <div class='book col-md-2 col-sm-4'>
                     <div class="thumbnail">
@@ -49,8 +49,8 @@
     </div>
     
     <div class="bordered top">
-        <h2>Borrowed Books <span class="open-close">+</span></h2>
-        <div class="row collapsible collapsed">
+        <h2>Borrowed Books <span class="open-close">-</span></h2>
+        <div class="row collapsible">
             <% if (borrowedBooks) { borrowedBooks.forEach(function(book) { %>
                 <div class='book col-md-2 col-sm-4'>
                     <div class="thumbnail">
@@ -65,8 +65,8 @@
     </div>
     
     <div class="bordered top">
-        <h2>Trades Ready <span class="open-close">+</span></h2>
-        <div class="row collapsible collapsed">
+        <h2>Trades Ready <span class="open-close">-</span></h2>
+        <div class="row collapsible">
             <% if (trades) { trades.forEach(function(trade) { %>
                 <div class='col-sm-6 text-center trade-group'>
                     <div class="col-sm-6">
