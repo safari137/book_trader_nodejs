@@ -19,7 +19,7 @@
     </div>
     
     <div class="bordered top">
-        <h2>My Requests <span class="open-close">+</span></h2> 
+        <h2>Requests Sent <span class="open-close">+</span></h2> 
         
         <div class="row collapsible collapsed">
             <% if (requestedBooks) { requestedBooks.forEach(function(request) { %>
@@ -41,7 +41,7 @@
                     <div class="thumbnail">
                         <img src='<%= request.book.imageUrl %>'>
                         <button class="btn btn-danger btn-block cancelRequest" id='<%= request.book._id %>'>Cancel</button>
-                        <a href="/user/<%=request.requesterId%>/books" class="btn btn-success btn-block">View Books</a>
+                        <a href="/user/<%=request.requesterId%>/books" class="btn btn-success btn-block">User's Books</a>
                     </div>
                 </div>
             <% })} %>

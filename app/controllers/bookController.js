@@ -67,9 +67,10 @@ var bookController = function() {
     
     this.removeBook= function(req, res) {
         Book.remove({_id : req.body._id}, function(err) {
-            if (err) throw err;
+            if (err) { res.send(err); return; }
+            
             removeBookRequests(req.body._id);
-            res.end();
+            res.send({'message' : 'deleted'});
         });
     }
     

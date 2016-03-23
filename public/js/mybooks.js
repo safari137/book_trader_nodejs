@@ -26,51 +26,40 @@ $(".cancelRequest").on('click', function() {
 function returnBook(id) {
     $.ajax({
         url: "/api/trade/" + id + "/return",
-        type: 'POST',
-        success: function() {
-            console.log('success');
-        }
+        type: 'POST'
     })
     .error(function(err) {
-        console.log('error');
         console.log(err);
     })
     .done(function() {
-        console.log("returned");
+        location.reload();
     });
 }
 
 function deleteBook(id) {
-    console.log('starting delete...');
     $.ajax({
         url : "/",
         type: 'DELETE',
         dataType : 'json',
-        data: { _id : id },
-        success : function() {
-            console.log('success');
-        }
+        data: { _id : id }
     })
     .error(function(err) {
         console.log(err);
     })
     .done(function() {
-        alert('deleted');
+        location.reload();
     });
 }
 
 function cancelRequest(id, element) {
     $.ajax({
         url : "/api/request/" + id,
-        type : "DELETE",
-        success : function() {
-            console.log('success');
-        }
+        type : "DELETE"
     })
     .error(function(err) {
         console.log(err);
     })
     .done(function() {
-        $(element).parents('.book').html('');
+        location.reload();
     });
 }
